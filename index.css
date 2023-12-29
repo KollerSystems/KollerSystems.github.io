@@ -85,7 +85,7 @@ html, body {
   height: 100%;
   opacity: 0;
 }
-#textpanel > span:hover {
+#textpanel > span:hover{
   transition: opacity 0.35s ease;
   opacity: 1;
 }
@@ -141,6 +141,8 @@ html, body {
   vertical-align: middle;
   top: 50%;
   text-decoration: none;
+  opacity: 1;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 #textpanel h3 a::after {
   content: '';
@@ -164,6 +166,6 @@ html, body {
   transform-origin: center;
 }
 #textpanel h3 a:hover::after,
-#textpanel h3 a:focus::after{
+#textpanel h3 a:focus::after {
   transform: scale(1);
 }
