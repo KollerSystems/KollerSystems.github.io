@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;700&family=Oxygen:wght@400;700&display=swap');
+
+html::-webkit-scrollbar {
+  display: none;
+}
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+#outsidecontainer {
+  position: absolute;
+  top: 0;
+  left: 1%;
+  width: 99%;
+  display: inline-block;
+  background: black;
+  z-index: -2;
+}
+
+#insidecontainer {
+  width: 80%;
+  margin: 0 10%;
+  z-index: 1;
+  background: black;
+  border-left: 2px dashed white;
+  border-right: 2px dashed white;
+}
+#middleLine {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  background: black;
+}
+#middleLine svg {
+  position: absolute;
+  top: 0;
+  left: calc(99% / 2);
+  transform: translateX(-50%);
+}
+.container {
+  position: relative;
+  display: inline-block;
+  width: calc((100% - 254px) / 2 + 0.5px);
+  background: white;
+  margin-top: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid white;
+}
+.container:nth-of-type(odd) {
+  left: 241px;
+  top: 250px;
+}
+
+.container img {
+  position: relative;
+  width: 100%;
+  background-size: contain;
+}
+.description h2 {
+  font-family: 'Oxygen';
+  font-weight: bold;
+  text-align: center;
+}
+.description p {
+  font-family: 'Oxygen';
+  font-weight: normal;
+  text-align: left;
+}
+.description {
+  padding: 20px;
+  padding-top: 0;
+}
+#mainCircle {
+  transition: transform 0.15s ease;
+}
+
+#backgroundCanvas {
+  position: absolute;
+  left: 0%;
+  top: 0;
+  z-index: -1;
+}
+
+.gradientCircle:nth-of-type(1) {
+  background: radial-gradient(circle at 80% 10%, #1a1a1a 0%, var(--background) 40%);
+  z-index: -1;
+}
+.gradientCircle:nth-of-type(2) {
+  background: radial-gradient(circle at 30% 50%, #2e2e2e 0%, var(--background) 50%);
+}
+.gradientCircle:nth-of-type(3) {
+  background: radial-gradient(circle at 100% 90%, #363636 0%, var(--background) 40%);
+}

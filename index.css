@@ -9,6 +9,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
+  zoom: reset;
 }
 
 #mainscreen {
@@ -22,84 +23,13 @@ html, body {
   display: inline-block;
 }
 
-#textpanel {
-  transition: width 0.45s ease;
-  position: relative;
-  width: 1%;
-  height: 100%;
-  background: black;
-  float: left;
-  z-index: 2;
-}
-
-#textpanel p {
-  color: white;
-  font-size: 1rem;
-  text-align: right;
-  padding: 0;
-  margin: auto;
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-}
-
-
-
-.gradientCircle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  filter: blur(6px);
-  opacity: 0;
-  z-index: -2;
-  transition: opacity 0.2s ease;
-}
-
-.gradientCircle:nth-of-type(1) {
-  background: var(--background);
-  background: radial-gradient(circle at 80% 10%, #00152d 0%, var(--background) 40%);
-  z-index: -1;
-}
-.gradientCircle:nth-of-type(2) {
-  background: var(--background);
-  background: radial-gradient(circle at 30% 50%, #002c5e 0%, var(--background) 50%);
-}
-.gradientCircle:nth-of-type(3) {
-  background: var(--background);
-  background: radial-gradient(circle at 100% 90%, #012348 0%, var(--background) 40%);
-}
-
-#textpanel:hover {
-  transition: width 0.45s ease;
-  width: 30%;
-}
-#textpanel > span {
-  transition: opacity 0.35s ease;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-#textpanel > span:hover{
-  transition: opacity 0.35s ease;
-  opacity: 1;
-}
-
-#textpanel h3, a {
-  color: white;
-}
 #mainscreen > video {
   position: absolute;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(8px);
+  filter: blur(1vh);
   transform: scale(1.04);
   pointer-events: none;
   float: right;
@@ -121,51 +51,4 @@ html, body {
   width: 100%;
   margin: auto;
   opacity: 1;
-}
-
-
-#textpanel h3 {
-  text-align: center;
-  width: 100%;
-  height: calc(100% / 3);
-  margin: 0;
-  font-family: 'Dosis', Arial, Helvetica, sans-serif;
-  font-size: 2rem;
-}
-#textpanel h3 a {
-  display: inline-block;
-  position: relative;
-  transform: translateY(-50%);
-  margin: auto;
-  text-align: center;
-  vertical-align: middle;
-  top: 50%;
-  text-decoration: none;
-  opacity: 1;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-#textpanel h3 a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0.2rem;
-  background-color: white;
-  opacity: 0;
-  transition: opacity 0.2s, transform 0.2s;
-}
-#textpanel h3 a:hover::after,
-#textpanel h3 a:focus::after {
-  opacity: 1;
-  transform: translate3d(0, 0.2em, 0);
-}
-#textpanel h3 a::after {
-  opacity: 1;
-  transform: scale(0);
-  transform-origin: center;
-}
-#textpanel h3 a:hover::after,
-#textpanel h3 a:focus::after {
-  transform: scale(1);
 }
