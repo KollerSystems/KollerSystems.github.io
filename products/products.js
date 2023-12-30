@@ -70,9 +70,10 @@ canvas.addEventListener('mousemove', e => {
   mouseY = e.pageY;
 });
 
-function Bubble(x,y) {
+function Bubble(x,y, speed = 1) {
   this.x = x;
   this.y = y;
+  this.speed = speed;
 }
 const r = 10;
 const mouseR = 20;
@@ -97,24 +98,24 @@ function checkResolveCollision(i, x, y, r1=r, r2=r, done) {
   if (bubbleI != -1 && !done.includes(bubbleI)) checkResolveCollision(bubbleI, bubbles[i].x, bubbles[i].y, r2, r, done);
 }
 
-// const insidecontainerProperties = window.getComputedStyle(document.getElementById('insidecontainer'));
-// let marginWidth = parseInt(insidecontainerProperties.marginRight, 10);
-// let rightOffset = parseInt(insidecontainerProperties.width + 2*marginWidth, 10) + 2*r;
+const insidecontainerProperties = window.getComputedStyle(document.getElementById('insidecontainer'));
+let marginWidth = parseInt(insidecontainerProperties.marginRight+(pageWidth/100 * 1), 10);
+let width = parseInt(insidecontainerProperties.width, 10);
 
 function render() {
   ctx.strokeStyle = 'white';
   ctx.clearRect(0,0,pageWidth,pageHeight);
 
-  if (nFrame == 2) {
+  if (nFrame == 4) {
     let collides = true;
     let randomX;
-    while (collides) {
+    while (collides || (randomX >= marginWidth && randomX <= (marginWidth+width))) {
       randomX = Math.floor(Math.random() * pageWidth);
       collides = !bubbles.every(bubble => {
         return Math.hypot(randomX - bubble.x, pageHeight - bubble.y) >= 2*r
       });
     }
-    bubbles.push(new Bubble(randomX, pageHeight));
+    bubbles.push(new Bubble(randomX, pageHeight, Math.random() + 1));
     nFrame = 0;
   }
 
@@ -127,11 +128,15 @@ function render() {
 
   for (let i = 0; i < bubbles.length; i++) {
     const bubble = bubbles[i];
-    bubble.y -= 1;
+    bubble.y -= bubble.speed;
 
     if (bubble.y + r <= 0) {
       bubbles.splice(i, 1);
     }
+
+    const index = bubbles.findIndex((v, i2) => ((i != i2) && collides(bubble.x, bubble.y, v.x, v.y, r, r)));
+    if (index != -1)
+      checkResolveCollision(index, bubble.x, bubble.y, r, r, []);
 
     ctx.beginPath();
     ctx.arc(bubble.x-2*r-5 , bubble.y, r, 0, 2 * Math.PI);

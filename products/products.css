@@ -26,9 +26,6 @@ html, body {
   width: 80%;
   margin: 0 10%;
   z-index: 1;
-  background: black;
-  border-left: 2px dashed white;
-  border-right: 2px dashed white;
 }
 #middleLine {
   position: relative;
@@ -56,6 +53,9 @@ html, body {
 .container:nth-of-type(odd) {
   left: 241px;
   top: 250px;
+}
+.container:last-of-type {
+  margin-bottom: 250px;
 }
 
 .container img {
