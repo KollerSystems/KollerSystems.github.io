@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;700&family=Oxygen:wght@400;700&display=swap');
 
+:root {
+  --scrollspeed: 0.6s;
+  --transformPrefix: 1;
+  --transformOrigin: 0;
+  --transformEnd: 125;
+}
+
 html::-webkit-scrollbar {
   display: none;
 }
@@ -11,6 +18,8 @@ html {
 html, body {
   padding: 0;
   margin: 0;
+  scroll-behavior: smooth;
+  overflow: hidden;
 }
 #outsidecontainer {
   position: absolute;
@@ -40,22 +49,36 @@ html, body {
   left: calc(99% / 2);
   transform: translateX(-50%);
 }
+
+.sideline {
+  transform: translateX(125px) scaleX(0);
+  transition: transform 0.5s ease;
+}
+.sideline:nth-of-type(odd) {
+  transform: translateX(125px) scaleX(0);
+}
+
 .container {
   position: relative;
   display: inline-block;
   width: calc((100% - 254px) / 2 + 0.5px);
   background: white;
-  margin-top: 250px;
+  margin-bottom: 250px;
+  margin-top: 50px;
   border-radius: 10px;
   overflow: hidden;
   border: 2px solid white;
+  opacity: 0;
+  filter: blur(0.5vh);
+  transform: translateY(50px) scale(0.98);
+  transition: opacity var(--scrollspeed) ease, transform var(--scrollspeed) ease, filter var(--scrollspeed) ease;
 }
 .container:nth-of-type(odd) {
   left: 241px;
   top: 250px;
 }
 .container:last-of-type {
-  margin-bottom: 250px;
+  margin-bottom: 50px;
 }
 
 .container img {
@@ -77,8 +100,9 @@ html, body {
   padding: 20px;
   padding-top: 0;
 }
+
 #mainCircle {
-  transition: transform 0.15s ease;
+  transition: transform 0.3s ease;
 }
 
 #backgroundCanvas {

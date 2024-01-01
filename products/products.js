@@ -1,3 +1,6 @@
+// IDEA: onscroll ugrás a következő vonal közepére, kártyák megjelennek
+// IDEA: közben háttéren random "tüzijáték" circle gradientek (canvas!)
+
 const svg = document.getElementById('middleSVG');
 const circle = document.getElementById('mainCircle');
 const mainLine = document.getElementById('mainLine');
@@ -12,17 +15,38 @@ svg.setAttribute('height', pageHeight);
 mainLine.setAttribute('y2', svg.clientHeight - 50);
 const lineLength = svg.clientHeight - 100;
 
-window.addEventListener('load', () => {
-  const containers = document.getElementsByClassName('container');
+const containers = document.getElementsByClassName('container');
+let lineYs = [];
+let lines;
+let currentYIndex = 0;
+let maxYIndex = 0;
 
-  document.getElementById('endCircle').setAttribute('cy', svg.clientHeight - 50)
+window.addEventListener('load', () => {
+  containers[0].style.transition = 'none';
+  containers[0].style.opacity = 1;
+  containers[0].style.transform = 'none';
+  containers[maxYIndex].style.filter = 'none';
+  window.scrollTo({top: lineYs[maxYIndex]-window.innerHeight/2, behavior: 'instant'});
 
   for (let i = 0; i < containers.length; i++) {
     const img = containers[i].getElementsByTagName('img')[0];
     const y = parseInt(containers[i].offsetTop + img.clientHeight + 2.5, 10);
+    lineYs.push(y);
     const x = i % 2 == 0 ? 0 : 125;
     const ns = 'http://www.w3.org/2000/svg';
+
+
+    let circle = document.createElementNS(ns, 'circle');
+    circle.setAttribute('cx', 125);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', 5);
+    circle.setAttribute('stroke', 'white');
+    circle.setAttribute('stroke-width', 4);
+    circle.setAttribute('fill', 'white');
+    svg.append(circle);
+
     let line = document.createElementNS(ns, 'line');
+    line.classList.add('sideline');
     line.setAttribute('x1', x);
     line.setAttribute('x2', x + 125);
     line.setAttribute('y1', y);
@@ -31,6 +55,14 @@ window.addEventListener('load', () => {
     line.style.strokeWidth = 5;
     svg.append(line)
   }
+  lines = svg.getElementsByClassName('sideline');
+
+  circle.style.transform = `matrix(1, 0, 0, 1, -125, ${lineYs[0]})`;
+
+  mainLine.setAttribute('y1', lineYs[0]);
+  mainLine.setAttribute('y2', lineYs.at(-1))
+
+  lines[0].style.transform = `matrix(1, 0, 0, 1, 0, 0)`;
 
   canvas.setAttribute('width', pageWidth);
   canvas.setAttribute('height', pageHeight);
@@ -38,34 +70,56 @@ window.addEventListener('load', () => {
   window.requestAnimationFrame(render);
 });
 
-window.addEventListener('scroll', () => {
-  const scrollRatio = window.scrollY / window.scrollMaxY;
-  circle.style.transform = `matrix(1, 0, 0, 1, 0, ${lineLength*scrollRatio})`;
-});
+function chainTransitionEnds(element, callbacks, parameters) {
+  if (callbacks.length == 0) return;
+  element.addEventListener('transitionend', ()=>{
+    callbacks[0](...(parameters[0]));
+    chainTransitionEnds(element, callbacks.slice(1), parameters.slice(1));
+  });
+}
 
-let circleDown = false;
-circle.addEventListener('mousedown', () => {
-  circleDown = true;
-  circle.style.transition = 'transform 0s ease';
-});
-window.addEventListener('mouseup', () => {
-  circleDown = false;
-  circle.style.transition = '';
-});
-window.addEventListener('mousemove', e => {
-  if (circleDown) {
-    let sanitizedY = e.pageY <= 50 ? 50 : e.pageY;
-    sanitizedY = e.pageY >= lineLength + 50 ? lineLength + 50 : e.pageY;
-    sanitizedY -= 50;
-    const scrollRatio = sanitizedY / lineLength;
-    window.scrollTo(0, window.scrollMaxY * scrollRatio);
+let scrollAllow = true;
+
+window.addEventListener('wheel', async e => {
+  e.preventDefault();
+  if (!scrollAllow) return;
+  let prevcurrentYIndex = currentYIndex;
+  window.scrollTo({top: lineYs[currentYIndex]-window.innerHeight/2, behavior: 'smooth'});
+  if (e.wheelDelta > 0) {
+    if (currentYIndex == 0) return;
+    currentYIndex = currentYIndex-1;
+  } else {
+    if (currentYIndex == lineYs.length-1) return;
+    currentYIndex = currentYIndex+1;
   }
+
+  if (currentYIndex > maxYIndex) maxYIndex = currentYIndex;
+
+  window.scrollTo(0, lineYs[currentYIndex] - window.innerHeight/2);
+  if (maxYIndex == currentYIndex) {
+    containers[maxYIndex].style.opacity = 1;
+    containers[maxYIndex].style.transform = 'none';
+    containers[maxYIndex].style.filter = 'none';
+
+    lines[maxYIndex].style.transform = 'translateX(0px) scaleX(1)';
+  }
+
+  let p = (currentYIndex % 2 == 0) ? 1 : -1
+  circle.style.transition = 'transform 0.1s ease-in';
+  circle.style.transform = `matrix(1, 0, 0, 1, ${p*0}, ${lineYs[prevcurrentYIndex]})`;
+  const variableLongTimeOfMiddlePartInTheMiddleOfThePageSVGThatHasADescriptiveVariableNameForBetterReadibilitySinceThereWillBeManyMoreContributors = 0.2 + (Math.abs(lineYs[prevcurrentYIndex] - lineYs[currentYIndex]) * 0.00005);
+  chainTransitionEnds(circle, [
+    (p, transition) => {circle.style.transition = transition; circle.style.transform = `matrix(1, 0, 0, 1, 0, ${lineYs[currentYIndex]})`},
+    (p, transition) => {circle.style.transition = transition; circle.style.transform = `matrix(1, 0, 0, 1, ${p*125}, ${lineYs[currentYIndex]})`}
+  ], [ [null, `transform ${variableLongTimeOfMiddlePartInTheMiddleOfThePageSVGThatHasADescriptiveVariableNameForBetterReadibilitySinceThereWillBeManyMoreContributors}s linear`], [p*-1, 'transform 0.1s ease-out'] ]);
+  scrollAllow = false;
+  setTimeout(() => {
+    scrollAllow = true;
+  }, variableLongTimeOfMiddlePartInTheMiddleOfThePageSVGThatHasADescriptiveVariableNameForBetterReadibilitySinceThereWillBeManyMoreContributors + 0.2*1000)
 });
 
-let mouseX, mouseY, lastX, lastY;
+let mouseX, mouseY;
 canvas.addEventListener('mousemove', e => {
-  lastX = mouseX;
-  lastY = mouseY;
   mouseX = e.pageX;
   mouseY = e.pageY;
 });
