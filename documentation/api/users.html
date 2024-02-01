@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="../style.css">
+	<link rel="icon" type="image/x-icon" href="../koller.png">
+	<title>Több felhasználó adatainak lekérése</title>
+</head>
+
+<body>
+	<img src="../koller.png" alt="Koller Icon" class="icon" onclick="location.href = '../';">
+	<div class="title">Koller Dokumentáció</div>
+	<div class="content">
+		<h1 style="text-align: center;">Több felhasználó adatainak lekérése</h1>
+		<h2>Leírás</h2>
+		<p>Több felhasználó lekérése. Mivel a lekérhető felhasználók típusai mások, így role paraméter hiányában csak a
+			közös tulajdonságokra lehet szűrni. Ellenkező esetben akármilyenre.</p>
+		<h2>Kérés a szervertől</h2>
+		<p class="url"><span class="get">GET</span>/api/users<span
+				class="def">?limit={limit}&offset={offset}&sort={sort}&filter={filter}</span></p>
+		<p class="url"><span class="header">HEADER</span>Authorization = Bearer xxxxxxxxxx <span class="def">(Bearer
+				tokened)</span></p>
+		<h2>Válasz a szervertől</h2>
+		<p>Sikeres bejelentkezés: <span class="ok">(200 OK)</span></p>
+		<pre>
+[
+	{
+		"UID": 25,
+		"Name": "Vasili Server",
+		"Role": 1,
+		"Gender": 0,
+		"Group": "L23",
+		"School": "Forest Hills Middle School",
+		"RID": 23,
+		"Class": {
+			"ID": 3,
+			"Class": "11.C",
+			"HeadTUID": 30
+		},
+		"Contacts": {
+			"ID": 23,
+			"Discord": "acapeyb",
+			"Facebook": "Augusto Capey",
+			"Instagram": "@acapeyb",
+			"Email": "acapeyb@blinklist.com"
+		}
+	},
+	...
+]</pre>
+		<p>Hiányzik az Authorization fejléc: <span class="error">(400 Bad Request)</span></p>
+		<pre>
+{
+	"error": "Authorization header field not present!"
+}</pre>
+		<p>Hiányzik a Bearer szó az access token előtt: <span class="error">(400 Bad Request)</span></p>
+		<pre>
+{
+	"error": "Authorization isn't prefixed by \"Bearer\"."
+}</pre>
+		<p>Helytelen access token: <span class="error">(401 Unauthorized)</span></p>
+		<pre>
+{
+	"error": "Invalid access token!"
+}</pre>
+		<p>Helytelen URL: <span class="error">(404 Not Found)</span></p>
+		<pre>
+{
+	"error": "Page not found!"
+}</pre>
+	</div>
+</body>
+
+</html>
