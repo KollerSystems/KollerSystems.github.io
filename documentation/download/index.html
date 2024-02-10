@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="../style.css">
+	<link rel="icon" type="image/x-icon" href="../koller.png">
+	<title>Koller szerver letöltése</title>
+</head>
+
+<body>
+	<a href="../index.html"><img src="../koller.png" alt="Koller Icon" class="icon"></a>
+	<div class="title">Koller Dokumentáció</div>
+	<div class="content">
+		<h1 style="text-align: center;">Koller szerver letöltése</h1>
+		<h2>Automatikus (Ajánlott)</h2>
+		<ol>
+			<li>
+				<p>Az automatikus telepítéssel a legegyszerűbb letölteni a szervert, hiszen minden szükséges fájlt
+					automatikusan és gyorsan telepít biztonságos webhelyről. Az egyetlen egy hátránya, hogy szükséges
+					dotnet 8.0-nak a gépen lennie. Ezt innen tudjuk telepíteni: <a
+						href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">https://dotnet.microsoft.com/en-us/download/dotnet/8.0</a>
+				</p>
+			</li>
+			<li>
+				<p>Ha sikeresen letöltöttük és feltelepítettük a dotnet 8.0-t a számítógépünkre, töltsük le az
+					automatikus szerver telepítőt a következő weboldalról: <a
+						href="https://github.com/4E-6F-72-62-65-72-74/Koller-Installer/releases/latest">https://github.com/4E-6F-72-62-65-72-74/Koller-Installer/releases/latest</a>
+				</p>
+			</li>
+			<li>
+				<p>Ha a telepítő letöltött, indítsuk el a kívánt mappában ahova a szervert szeretnénk telepíteni és
+					mindent elvégez magától abban a mappában. Egy kivétel van, az adatbázis root jelszava. Itt magunknak
+					be kell írni milyen jelszót szeretnénk és a telepítő elvégzi a feladatokat magától. Ha üresen
+					hagyjuk, a telepítő magától generál egy jelszót. (A jelszó később kinézhető az options.json fájlból)
+				</p>
+			</li>
+			<li>
+				<p>Ha ezzel is megvagyunk, a telepítő létrehoz egy start.bat fájlt és egy update.bat fájlt. Az elsővel
+					tudjuk elindítani a szervert, a másodikkal frissíteni tudjuk azt naprakészre. Indítsuk el a
+					start.bat-ot és a szerver már fut is.</p>
+			</li>
+		</ol>
+		<h2>Manuális</h2>
+		<ol>
+			<li>
+				<p>Töltsük le és telepítsük a NodeJS-t: <a
+						href="https://nodejs.org/en/download/" target="_blank">https://nodejs.org/en/download/</a></p>
+			</li>
+			<li>
+				<p>Töltsük le és telepítsük a Git-et: <a
+						href="https://git-scm.com/download/" target="_blank">https://git-scm.com/download/</a></p>
+			</li>
+			<li>
+				<p>Töltsük le és telepítsük a MariaDB-t: <a
+						href="https://mariadb.org/download/" target="_blank">https://mariadb.org/download/</a></p>
+			</li>
+			<li>
+				<p>Nyissunk egy parancssort és navigáljuk a számunkra tökéletes mappába, ahova a szervert fogjuk
+					telepíteni, majd töltsük le GitHub-ról a szervert:</p>
+				<code>git clone https://github.com/4E-6F-72-62-65-72-74/Koller-Server.git</code>
+				<p>Ha ez készen van, töltsük le az adatbázishoz sükséges fájlokat is:</p>
+				<code>git clone https://github.com/4E-6F-72-62-65-72-74/Koller-Database.git</code>
+			</li>
+			<li>
+				<p>Indítsunk el egy MySQL klienst és futtassunk 2+1 parancsot:</p>
+				<p>Adatbázis séma feltöltése:</p>
+				<code>SOURCE .../Koller-Database/schema.sql;</code>
+				<p>Adatbázis konfiguráció feltöltése:</p>
+				<code>SOURCE .../Koller-Database/config.sql;</code>
+				<p>Dummy felhasználók feltöltése: (opcionális)</p>
+				<code>SOURCE .../Koller-Database/dummy.sql;</code>
+			</li>
+			<li>
+				<p>Parancssorral navigáljunk a Koller-Server mappába és töltsük le a NodeJS modulokat a következő
+					parancs segítségével:</p>
+				<code>npm install</code>
+			</li>
+			<li>
+				<p>A szerver sikeresen telepítve van, ha nincsen egy hiba sem. Innentől a szerver elindítható ezzel a
+					parancs
+					segítségével:</p>
+				<code>npm start</code>
+				<p>vagy clusterelés nélkül: (tesztelésre ajánlott)</p>
+				<code>node index.js</code>
+			</li>
+		</ol>
+		<p>Opcionális: Csináljuk indító batch fájlt a könnyebb indítás érdekében a fő mappában. Mentsük el a fájlt
+			start.bat fájlként
+			(Csak Windows)</p>
+		<pre>
+@echo off
+cd Koller-Server
+node index.js
+PAUSE
+</pre>
+		<p></p>
+		<p>Opcionális: Csináljuk frissítő batch fájlt a könnyebb frissítés érdekében a fő mappában. Mentsük el a fájlt
+			update.bat fájlként
+			(Csak Windows)</p>
+		<pre>
+@echo off
+cd Koller-Server
+git pull
+cd ../Koller-Database
+git pull
+PAUSE
+</pre>
+		<p></p>
+	</div>
+</body>
+
+</html>

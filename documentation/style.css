@@ -1,0 +1,153 @@
+body {
+	background-color: #202020;
+	color: #F0F0F0;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: cover;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	margin: 0;
+	padding: 0;
+	word-wrap: break-word;
+}
+
+a {
+	color: lightskyblue;
+}
+
+.title {
+	font-size: 50px;
+	margin: 0px;
+	border: 0px;
+	background: #303030;
+	padding: 20px;
+	box-shadow: 0px 0px 20px black;
+}
+
+.icon {
+	float: left;
+	margin: 10px;
+	width: 80px;
+	border-radius: 25%;
+}
+
+.content {
+	margin: 20px;
+}
+
+.important {
+	color: red;
+	margin: 0px;
+}
+
+.need {
+	color: orangered;
+	margin: 0px;
+}
+
+.put {
+	color: royalblue;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.delete {
+	color: red;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.get {
+	color: lime;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.post {
+	color: orange;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.header {
+	color: pink;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.part {
+	color: burlywood;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.body {
+	color: deeppink;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.url {
+	color: lightgray;
+	margin: 5px;
+}
+
+.def {
+	color: gray;
+}
+
+.def2 {
+	color: darkgray;
+}
+
+.new {
+	font-size: 40px;
+	margin-top: 50px;
+}
+
+.info {
+	color: cadetblue;
+}
+
+.error {
+	color: red;
+}
+
+.ok {
+	color: lime;
+}
+
+code, pre {
+	padding: 10px;
+	border-radius: 10px;
+	background-color: #404040;
+	font-size: large;
+	tab-size: 4;
+	box-shadow: 5px 10px 15px black;
+}
+
+.item {
+	vertical-align: top;
+	border: 1px solid gray;
+	border-radius: 20px;
+	box-shadow: 5px 10px 15px black;
+}
+
+.menu {
+	border-spacing: 20px;
+	width: 100%;
+}
+
+.topic {
+	text-align: center;
+}
+
+.dtoItem {
+	border: 1px solid gray;
+	padding: 10px;
+}
+
+.dto {
+	border-spacing: 0px;
+	width: 100%;
+	box-shadow: 5px 10px 15px black;
+}

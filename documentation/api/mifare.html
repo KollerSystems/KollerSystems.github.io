@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="../style.css">
+	<link rel="icon" type="image/x-icon" href="../koller.png">
+	<title>Mifare tag lekérése</title>
+</head>
+
+<body>
+	<a href="../"><img src="../koller.png" alt="Koller Icon" class="icon"></a>
+	<div class="title">Koller Dokumentáció</div>
+	<div class="content">
+		<h1 style="text-align: center;">Mifare tag lekérése</h1>
+		<h2>Leírás</h2>
+		<p>A kérést application/octet-stream Content Type headerrel el kell látni, a kérés body-jába kell a lekérdezendő
+			mifare bilétáról megszerzett kulcs adatait rakni. Ha a kulcs létezik visszakapjuk a kulcsról az
+			információkat, ha nem akkor egy 404-es hibakódot.</p>
+		<h2>Kérés a szervertől</h2>
+		<p class="url"><span class="post">POST</span>/api/users/mifare</p>
+		<p class="url"><span class="header">HEADER</span>Authorization = Bearer xxxxxxxxxx <span class="def">(Bearer
+				tokened)</span></p>
+		<p class="url"><span class="header">HEADER</span>Content-Type = application/octet-stream</p>
+		<p class="url"><span class="body">BODY</span>Mifare azonosító <span class="def">(32 bájt)</span></p>
+		<h2>Válasz a szervertől</h2>
+		<p>Sikeres bejelentkezés: <span class="ok">(200 OK)</span></p>
+		<pre>
+{
+	"PID": 0,
+	"Issued": "1970-01-01T00:00:00.000Z",
+	"Bytes": [
+		101,
+		102,
+		103,
+		...
+	]
+}</pre>
+		<p>Hiányzik az Authorization fejléc: <span class="error">(400 Bad Request)</span></p>
+		<pre>
+{
+	"error": "Authorization header field not present!"
+}</pre>
+		<p>Hiányzik a Bearer szó az access token előtt: <span class="error">(400 Bad Request)</span></p>
+		<pre>
+{
+	"error": "Authorization isn't prefixed by \"Bearer\"."
+}</pre>
+		<p>Helytelen access token: <span class="error">(401 Unauthorized)</span></p>
+		<pre>
+{
+	"error": "Invalid access token!"
+}</pre>
+		<p>Nincs body: <span class="error">(400 Bad Request)</span></p>
+		<pre>
+{
+	"error": "No tag data provided!"
+}</pre>
+		<p>Helytelen body: <span class="error">(404 Not Found)</span></p>
+		<pre>
+{
+	"error": "No such tag found!"
+}</pre>
+		<p>Helytelen URL: <span class="error">(404 Not Found)</span></p>
+		<pre>
+{
+	"error": "Page not found!"
+}</pre>
+	</div>
+</body>
+
+</html>
