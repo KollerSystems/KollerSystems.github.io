@@ -1,23 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;700&family=Gowun+Batang:wght@400;700&family=Oxygen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
 
 body, html {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 #page {
   position: absolute;
   left: 1%;
   width: 99%;
-  height: 100%;
-  background: #0A0E14;
+  height: fit-content;
 }
 
 #server {
   position: relative;
   top: 0;
-  height: 100%;
 }
-#server video {
+
+.fullscreenOverhang {
+  height: 100vh;
+  background: #0A0E14;
+  margin-bottom: calc(10vh + 4px);
+}
+
+.fullscreenOverhang video {
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -25,7 +32,6 @@ body, html {
   border: 2px solid #e5b54f7e;
   border-radius: 10px;
   box-shadow: #e5b54f4d 10px 10px 2vh, #e5b54f4d -10px -10px 2vh;
-  bottom: -50%;
 }
 #server h1 {
   display: inline-block;
@@ -37,9 +43,9 @@ body, html {
   width: 100%;
   font-weight: 400;
 }
-#server div {
-  height: 50%;
+.textcontainer div {
   position: relative;
+  height: 50%;
 }
 #server .title {
   font-size: 6em;
@@ -51,7 +57,7 @@ body, html {
   transform: translateY(-50%);
 }
 
-.description::before {
+.highlight::before {
   transform: scaleX(0);
   transform-origin: bottom right;
 }
@@ -59,7 +65,7 @@ body, html {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-.description::before {
+.highlight::before {
   content: " ";
   display: block;
   position: absolute;
@@ -71,17 +77,19 @@ body, html {
 }
 
 #server .textcontainer {
-  position: absolute;
+  position: relative;
   display: inline-block;
   height: 50%;
   width: 100%;
 }
-
+#server .descriptionContainer {
+  top: 50px;
+  margin-top: 50px;
+}
 .descriptionContainer {
   display: flex;
   position: relative;
-  top: 50%;
-  margin-top: 50px;
+  height: fit-content !important;
 }
 
 .descriptionContainer > p {
@@ -89,6 +97,91 @@ body, html {
   text-align: justify;
   font-family: 'Gowun Batang', Arial, Helvetica, sans-serif;
   font-size: 1.2em;
+}
+
+#android {
+  position: relative;
+  top: calc(10vh + 50px);
+}
+
+#android .fullscreenOverhang {
+  background: #10131A;
+  display: flex;
+  width: 100%;
+}
+
+#android img {
+  position: relative;
+  height: 85%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#android .sidetextContainer, #android .imgFlexContainer {
+  position: relative;
+  width: 50%;
+}
+#android .sidetextContainer {
+  text-align: left;
+  margin-left: 10%;
+  font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  color: white;
+  padding-top: calc(50vh - 4em);
+}
+
+#android .description {
+  font-weight: 400;
+  font-size: 2em;
+  margin: 0
+}
+#android .title {
+  font-weight: 600;
+  font-size: 4em;
+  margin: 0;
+  margin-bottom: 20px;
+}
+#android .description {
+  font-weight: 400;
+  font-size: 2em;
+  margin: 0;
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+}
+#android .translatedwrite {
+  border-top: 2px solid #00BF9E;
+  padding-top: 5px;
+  margin-top: 2px;
+  line-height: 120%;
+  display: table;
+  width: 75%;
+  vertical-align: middle;
+}
+#android .translatedwrite span:first-child {
+  text-align: left;
+}
+#android .translatedwrite span:last-child {
+  text-align: right;
+}
+
+#android .translatedwrite span {
+  display: table-cell;
+  text-align: center;
+  width: calc(100% / 4);
+}
+#android .translatedwrite .dot {
+  width: calc(100% / 4 / 3);
+}
+
+#server ::selection {
+  color: black;
+  background: #e5b54f;
+}
+
+#android ::selection {
+  color: black;
+  background: #00BF9E;
+}
+#android .fullscreenOverhang {
+  margin-bottom: 50px;
 }
 
 .gradientCircle:nth-of-type(1) {
