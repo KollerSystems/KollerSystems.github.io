@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<img src="../koller.png" alt="Koller Icon" class="icon" onclick="location.href = '../';">
+	<a href="../index.html"><img src="../koller.png" alt="Koller Icon" class="icon"></a>
 	<div class="title">Koller Dokumentáció</div>
 	<div class="content">
 		<h1 style="text-align: center;">Specifikus felhasználó adatainak lekérése</h1>
@@ -25,49 +25,61 @@
 		<pre>
 {
 	"UID": 1,
-	"Name": "Farly Jorgensen",
-	"Gender": 0,
-	"Picture": null,
-	"Group": "L1",
-	"School": "Mountainview High School",
-	"RID": 1,
+	"School": "BMSZC Puskás Tivadar Távközlési Technikum",
+	"RID": 172,
 	"Class": {
 		"ID": 1,
-		"Class": "9.A",
-		"HeadTUID": 10
+		"Class": "11.B",
+		"Old": 0
+	},
+	"Group": {
+		"ID": 3,
+		"Group": "F8",
+		"Old": 0,
+		"HeadTUID": 5
 	},
 	"Contacts": {
-		"ID": 1,
-		"Discord": "cryam0",
-		"Facebook": "Chaddy Ryam",
-		"Instagram": "@cryam0",
-		"Email": "cryam0@vkontakte.ru"
+		"ID": 7773,
+		"Discord": "TheBigVMT",
+		"Facebook": "Várnagy Miklós Tamás",
+		"Instagram": "@Josh",
+		"Email": "xdxd1243@gmail.com"
 	}
 }</pre>
 		<p>Hiányzik az Authorization fejléc: <span class="error">(400 Bad Request)</span></p>
 		<pre>
 {
-	"error": "Authorization header field not present!"
+	"error": "missing_auth_field",
+	"status_code": 400,
+	"error_description": "The Authorization header field is not present."
 }</pre>
 		<p>Hiányzik a Bearer szó az access token előtt: <span class="error">(400 Bad Request)</span></p>
 		<pre>
 {
-	"error": "Authorization isn't prefixed by \"Bearer\"."
+	"error": "missing_bearer_prefix",
+	"status_code": 400,
+	"error_description": "The Authorization header is not prefixed by \"Bearer\"."
 }</pre>
 		<p>Helytelen access token: <span class="error">(401 Unauthorized)</span></p>
 		<pre>
 {
-	"error": "Invalid access token!"
+	"error": "invalid_token",
+	"status_code": 401,
+	"error_description": "The provided token was incorrect or missing."
 }</pre>
-		<p>Helytelen RID: <span class="error">(404 Not Found)</span></p>
+		<p>Helytelen UID: <span class="error">(404 Not Found)</span></p>
 		<pre>
 {
-	"error": "There is no user with specified ID!"
+	"error": "missing_resource",
+	"status_code": 404,
+	"error_description": "The resource requested was not found."
 }</pre>
 		<p>Helytelen URL: <span class="error">(404 Not Found)</span></p>
-		<pre>
+<pre>
 {
-	"error": "Page not found!"
+	"error": "missing_resource",
+	"status_code": 404,
+	"error_description": "The resource requested was not found."
 }</pre>
 	</div>
 </body>

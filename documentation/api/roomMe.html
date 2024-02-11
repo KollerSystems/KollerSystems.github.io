@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<img src="../koller.png" alt="Koller Icon" class="icon" onclick="location.href = '../';">
+	<a href="../index.html"><img src="../koller.png" alt="Koller Icon" class="icon"></a>
 	<div class="title">Koller Dokumentáció</div>
 	<div class="content">
 		<h1 style="text-align: center;">Saját szoba lekérése</h1>
@@ -41,27 +41,37 @@
 		<p>A felhasználónak nincs szobája: <span class="error">(404 Not Found)</span></p>
 		<pre>
 {
-	"error": "Page not found!"
+	"error": "missing_resource",
+	"status_code": 404,
+	"error_description": "The resource requested was not found."
 }</pre>
-		<p>Hiányzik az Authorization fejléc: <span class="error">(400 Bad Request)</span></p>
+	<p>Hiányzik az Authorization fejléc: <span class="error">(400 Bad Request)</span></p>
 		<pre>
 {
-	"error": "Authorization header field not present!"
+	"error": "missing_auth_field",
+	"status_code": 400,
+	"error_description": "The Authorization header field is not present."
 }</pre>
 		<p>Hiányzik a Bearer szó az access token előtt: <span class="error">(400 Bad Request)</span></p>
 		<pre>
 {
-	"error": "Authorization isn't prefixed by \"Bearer\"."
+	"error": "missing_bearer_prefix",
+	"status_code": 400,
+	"error_description": "The Authorization header is not prefixed by \"Bearer\"."
 }</pre>
 		<p>Helytelen access token: <span class="error">(401 Unauthorized)</span></p>
 		<pre>
 {
-	"error": "Invalid access token!"
+	"error": "invalid_token",
+	"status_code": 401,
+	"error_description": "The provided token was incorrect or missing."
 }</pre>
 		<p>Helytelen URL: <span class="error">(404 Not Found)</span></p>
-		<pre>
+<pre>
 {
-	"error": "Page not found!"
+	"error": "missing_resource",
+	"status_code": 404,
+	"error_description": "The resource requested was not found."
 }</pre>
 	</div>
 </body>

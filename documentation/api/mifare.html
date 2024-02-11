@@ -40,32 +40,51 @@
 		<p>Hiányzik az Authorization fejléc: <span class="error">(400 Bad Request)</span></p>
 		<pre>
 {
-	"error": "Authorization header field not present!"
+	"error": "missing_auth_field",
+	"status_code": 400,
+	"error_description": "The Authorization header field is not present."
 }</pre>
 		<p>Hiányzik a Bearer szó az access token előtt: <span class="error">(400 Bad Request)</span></p>
 		<pre>
 {
-	"error": "Authorization isn't prefixed by \"Bearer\"."
+	"error": "missing_bearer_prefix",
+	"status_code": 400,
+	"error_description": "The Authorization header is not prefixed by \"Bearer\"."
 }</pre>
 		<p>Helytelen access token: <span class="error">(401 Unauthorized)</span></p>
 		<pre>
 {
-	"error": "Invalid access token!"
+	"error": "invalid_token",
+	"status_code": 401,
+	"error_description": "The provided token was incorrect or missing."
 }</pre>
-		<p>Nincs body: <span class="error">(400 Bad Request)</span></p>
+	<p>Nincs engdélyed: <span class="error">(403 Forbidden)</span></p>
 		<pre>
 {
-	"error": "No tag data provided!"
+	"error": "missing_permissions",
+	"status_code": 403,
+	"error_description": "You do not have sufficient permissions for the resource."
 }</pre>
-		<p>Helytelen body: <span class="error">(404 Not Found)</span></p>
+		<p>Helytelen body: <span class="error">(400 Bad Request)</span></p>
 		<pre>
 {
-	"error": "No such tag found!"
+	"error": "invalid_data",
+	"status_code": 400,
+	"error_description": "Data provided in POST body was invalid."
+}</pre>
+		<p>Nem található mifare tag: <span class="error">(404 Not Found)</span></p>
+<pre>
+{
+	"error": "missing_resource",
+	"status_code": 404,
+	"error_description": "The resource requested was not found."
 }</pre>
 		<p>Helytelen URL: <span class="error">(404 Not Found)</span></p>
 		<pre>
 {
-	"error": "Page not found!"
+	"error": "missing_resource",
+	"status_code": 404,
+	"error_description": "The resource requested was not found."
 }</pre>
 	</div>
 </body>
