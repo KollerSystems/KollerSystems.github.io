@@ -40,13 +40,21 @@ window.addEventListener('load', async () => {
   }
 });
 
+const scrollContainer = document.getElementById('scroller');
+
 let scrollPos = 0;
+const scrollCases = 4;
 document.addEventListener('wheel', async e => {
   e.preventDefault();
-  const cases = 3;
-  if (e.wheelDeltaY < 0) scrollPos = ++scrollPos > cases ? scrollPos = cases : scrollPos;
+
+  scrollContainer.children[scrollPos].classList.remove('currentpage');
+
+  if (e.wheelDeltaY < 0) scrollPos = ++scrollPos > scrollCases ? scrollPos = scrollCases : scrollPos;
   else scrollPos = --scrollPos < 0 ? scrollPos = 0 : scrollPos;
   let greatestPos = -1;
+
+  scrollContainer.children[scrollPos].classList.add('currentpage');
+
   switch (scrollPos) {
     case 0:
       window.scrollTo({ behavior: 'smooth', left: 0, top: 0 });
@@ -58,6 +66,9 @@ document.addEventListener('wheel', async e => {
       window.scrollTo({ behavior: 'smooth', left: 0, top: document.getElementById('android').offsetTop });
       break;
     case 3:
+      window.scrollTo({ behavior: 'smooth', left: 0, top: document.getElementById('developers').offsetTop - window.innerHeight });
+      break;
+    case scrollCases:
       window.scrollTo({ behavior: 'smooth', left: 0, top: document.documentElement.scrollHeight - window.innerHeight  });
       break;
   }
@@ -67,6 +78,13 @@ document.addEventListener('wheel', async e => {
 const getWriter = (isWrite, lang, minT, maxT, text) => isWrite ? write(document.getElementsByClassName(lang)[0], text, minT, maxT) : unwrite(document.getElementsByClassName(lang)[0], minT, maxT);
 
 window.addEventListener('load', async () => {
+  for (let i = 0; i <= scrollCases; i++) {
+    const span = document.createElement('span');
+    span.appendChild(document.createTextNode('•'));
+    scrollContainer.appendChild(span);
+  }
+  scrollContainer.children[scrollPos].classList.add('currentpage');
+
   const callWriters = (paramsArr) => {
     let promises = [];
     paramsArr.forEach(params => {
@@ -89,3 +107,36 @@ window.addEventListener('load', async () => {
     await Promise.all(callWriters([[false, 'hu', 70, 90], [false, 'zh', 150, 240], [false, 'ar', 120, 180]]));
   }
 });
+
+let override = false;
+let devHighlightIndex = 0;
+
+const flexDivs = document.getElementById('devsFlexbox').children;
+for (let i = 0; i < flexDivs.length; i++) {
+  const div = flexDivs[i];
+  div.addEventListener('mouseenter', () => {
+    override = true;
+    for (d of flexDivs) {
+      d.classList.remove('onscreenpopup');
+      d.getElementsByClassName('popupdesc')[0].classList.remove('onscreenpopup');
+    }
+    div.getElementsByClassName('popupdesc')[0].classList.add('onscreenpopup');
+  });
+  div.addEventListener('mouseleave', () => {
+    devHighlightIndex = i;
+    div.getElementsByClassName('popupdesc')[0].classList.add('onscreenpopup');
+    div.classList.add('onscreenpopup');
+    override = false;
+  });
+}
+
+flexDivs[devHighlightIndex].getElementsByClassName('popupdesc')[0].classList.add('onscreenpopup');
+flexDivs[devHighlightIndex].classList.add('onscreenpopup');
+setInterval(() => {
+  if (override) return;
+  flexDivs[devHighlightIndex].classList.remove('onscreenpopup');
+  flexDivs[devHighlightIndex].getElementsByClassName('popupdesc')[0].classList.remove('onscreenpopup');
+  devHighlightIndex = devHighlightIndex+2 > flexDivs.length ? 0 : devHighlightIndex+1;
+  flexDivs[devHighlightIndex].getElementsByClassName('popupdesc')[0].classList.add('onscreenpopup');
+  flexDivs[devHighlightIndex].classList.add('onscreenpopup');
+}, 5000);
