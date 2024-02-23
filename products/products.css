@@ -1,23 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;700&family=Gowun+Batang:wght@400;700&family=Oxygen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
 
 body, html {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 #page {
   position: absolute;
   left: 1%;
   width: 99%;
-  height: 100%;
-  background: #0A0E14;
+  height: fit-content;
 }
+
+
+#scroller {
+  position: fixed;
+  z-index: 5;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: fit-content;
+  width: 20px;
+}
+
+#scroller span {
+  width: max-content;
+  height: max-content;
+  font-size: 1em;
+  display: block;
+  position: relative;
+  color: gray;
+  text-align: center;
+  width: 100%;
+  transition: font-size ease 200ms;
+}
+#scroller span.currentpage {
+  font-size: 2em;
+  transition: font-size ease 200ms;
+}
+
 
 #server {
   position: relative;
   top: 0;
-  height: 100%;
 }
-#server video {
+
+.fullscreenOverhang {
+  height: 100vh;
+  background: #0A0E14;
+  margin-bottom: calc(10vh + 4px);
+}
+
+.fullscreenOverhang video {
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -25,7 +61,6 @@ body, html {
   border: 2px solid #e5b54f7e;
   border-radius: 10px;
   box-shadow: #e5b54f4d 10px 10px 2vh, #e5b54f4d -10px -10px 2vh;
-  bottom: -50%;
 }
 #server h1 {
   display: inline-block;
@@ -37,9 +72,9 @@ body, html {
   width: 100%;
   font-weight: 400;
 }
-#server div {
-  height: 50%;
+.textcontainer div {
   position: relative;
+  height: 50%;
 }
 #server .title {
   font-size: 6em;
@@ -51,7 +86,7 @@ body, html {
   transform: translateY(-50%);
 }
 
-.description::before {
+.highlight::before {
   transform: scaleX(0);
   transform-origin: bottom right;
 }
@@ -59,7 +94,7 @@ body, html {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-.description::before {
+.highlight::before {
   content: " ";
   display: block;
   position: absolute;
@@ -71,17 +106,19 @@ body, html {
 }
 
 #server .textcontainer {
-  position: absolute;
+  position: relative;
   display: inline-block;
   height: 50%;
   width: 100%;
 }
-
+#server .descriptionContainer {
+  top: 50px;
+  margin-top: 50px;
+}
 .descriptionContainer {
   display: flex;
   position: relative;
-  top: 50%;
-  margin-top: 50px;
+  height: fit-content !important;
 }
 
 .descriptionContainer > p {
@@ -89,6 +126,164 @@ body, html {
   text-align: justify;
   font-family: 'Gowun Batang', Arial, Helvetica, sans-serif;
   font-size: 1.2em;
+}
+
+#android {
+  position: relative;
+  top: calc(10vh + 50px);
+}
+
+#android .fullscreenOverhang {
+  background: #10131A;
+  display: flex;
+  width: 100%;
+}
+
+#android img {
+  position: relative;
+  height: 85%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#android .sidetextContainer, #android .imgFlexContainer {
+  position: relative;
+  width: 50%;
+}
+#android .sidetextContainer {
+  text-align: left;
+  margin-left: 10%;
+  font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  color: white;
+  padding-top: calc(50vh - 4em);
+}
+
+#android .description {
+  font-weight: 400;
+  font-size: 2em;
+  margin: 0
+}
+#android .title {
+  font-weight: 600;
+  font-size: 4em;
+  margin: 0;
+  margin-bottom: 20px;
+}
+#android .description {
+  font-weight: 400;
+  font-size: 2em;
+  margin: 0;
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+}
+#android .translatedwrite {
+  border-top: 2px solid #00BF9E;
+  padding-top: 5px;
+  margin-top: 2px;
+  line-height: 120%;
+  display: table;
+  width: 75%;
+  vertical-align: middle;
+}
+#android .translatedwrite span:first-child {
+  text-align: left;
+}
+#android .translatedwrite span:last-child {
+  text-align: right;
+}
+
+#android .translatedwrite span {
+  display: table-cell;
+  text-align: center;
+  width: calc(100% / 4);
+}
+#android .translatedwrite .dot {
+  width: calc(100% / 4 / 3);
+}
+
+#server ::selection {
+  color: black;
+  background: #e5b54f;
+}
+
+#android ::selection {
+  color: black;
+  background: #00BF9E;
+}
+#android .fullscreenOverhang {
+  margin-bottom: 50px;
+}
+#android .descriptionContainer {
+  margin-bottom: 50px;
+}
+
+
+#developers {
+  position: relative;
+  top: calc(10vh + 50px);
+}
+#developers .fullscreenOverhang {
+  background: #fdecdc;
+}
+
+#devsFlexbox {
+  display: flex;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60vh;
+  margin: 10px 0;
+  /* border: 4px solid white; */
+  padding: 30px 20%;
+
+}
+#devsFlexbox > div {
+  position: relative;
+  overflow: hidden;
+  background-position: 50% 25%;
+  width: 100%;
+  height: 100%;
+  margin-left: 20px;
+  transition: 500ms ease width;
+}
+#devsFlexbox > div:first-child {
+  margin-left: 0;
+}
+#devsFlexbox > div:nth-child(even) {
+  top: 10px;
+}
+#devsFlexbox > div:nth-child(odd) {
+  top: -10px;
+}
+#devsFlexbox > div:hover, #devsFlexbox > div.onscreenpopup {
+  width: 250%;
+  transition: 500ms ease width;
+}
+.popupdesc {
+  position: relative;
+  left: 50%;
+  top: 100%;
+  width: fit-content;
+  transform: translate(-50%, 50%);
+  height: fit-content;
+  background: #110e0b;
+  padding: 8px 12px;
+  transition: 500ms ease top;
+}
+.popupdesc p {
+  color: white;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+  letter-spacing: 4px;
+  font-size: 1.75em;
+}
+.popupdesc.onscreenpopup {
+  top: 80% !important;
+  transition: 600ms ease top 400ms;
 }
 
 .gradientCircle:nth-of-type(1) {
