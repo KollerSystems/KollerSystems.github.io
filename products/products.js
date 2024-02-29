@@ -79,9 +79,8 @@ const getWriter = (isWrite, lang, minT, maxT, text) => isWrite ? write(document.
 
 window.addEventListener('load', async () => {
   for (let i = 0; i <= scrollCases; i++) {
-    const span = document.createElement('span');
-    span.appendChild(document.createTextNode('•'));
-    scrollContainer.appendChild(span);
+    const div = document.createElement('div');
+    scrollContainer.appendChild(div);
   }
   scrollContainer.children[scrollPos].classList.add('currentpage');
 
