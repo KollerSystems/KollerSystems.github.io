@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&family=Updock&display=swap');
 
 body, html {
   margin: 0;
@@ -32,8 +32,13 @@ body, html {
 }
 
 #countercontainer {
-  background: black;
+  background: white;
 }
+#countercontainer.fadeover {
+  background: black;
+  transition: background ease 1s, left 0.4s ease;
+}
+
 #counter {
   display: flex;
   flex-direction: row;
@@ -56,4 +61,78 @@ body, html {
   font-size: 12em;
   font-family: "SUSE";
   height: 1em;
+  line-height: 1em;
+  vertical-align: middle;
+}
+
+#counter::before, #counter::after {
+  content: '';
+  width: 100%;
+  height: 3vh;
+  background: linear-gradient(to top, transparent, white);
+  position: absolute;
+  z-index: 2;
+  opacity: 0;
+}
+#counter::after {
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, white);
+  opacity: 0;
+}
+#counter.fadeover::before, #counter.fadeover::after {
+  opacity: 1;
+  background: linear-gradient(to top, transparent, black);
+  transition: opacity 1s 1s ease, background 1s ease;
+}
+#counter.fadeover::after {
+  background: linear-gradient(to bottom, transparent, black);
+}
+
+#quote {
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: black;
+  z-index: 10;
+}
+#quote h1 {
+  font-size: 4em;
+  font-family: Updock;
+  transform: scale(0.94);
+}
+#quote h1.animate {
+  animation: scale 3s forwards cubic-bezier(0.5, 1, 0.89, 1);
+}
+#quote h1.disanimate {
+  animation: remove 0.5s forwards cubic-bezier(0.5, 1, 0.89, 1);
+}
+#quote span {
+  filter: blur(4px);
+  opacity: 0;
+}
+#quote span.animate {
+  animation: fade-in 0.8s forwards cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+@keyframes fade-in {
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes scale {
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes remove {
+  100% {
+    transform: scale(0.94) translateY(-30px);
+    opacity: 0;
+    filter: blur(50px);
+    display: none;
+  }
 }
