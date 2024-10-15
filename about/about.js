@@ -29,8 +29,7 @@ function createRecursiveTimeout(callback, timerFunc) {
 async function updateCounterDigit(digitN, timePerNum, numarr, type = 'linear') {
   const totalTime = timePerNum * numarr.length;
 
-  const counter = document.getElementById('counter');
-  const digit = counter.children[digitN];
+  const digit = document.querySelectorAll('#counter > div')[digitN];
 
   digit.style.top = digit.clientTop + 'px';
   digit.style.transition = `top ${totalTime}ms ${type}`;
@@ -74,8 +73,7 @@ async function updateCounterDigitAbstract(
   }
   const getDigit = decPlaceIndex => {
     return parseInt(
-      document.getElementById('counter')
-        .children[decPlaceIndex]
+      document.querySelectorAll('#counter > div')[decPlaceIndex]
         .children[0]
         .innerHTML,
       10
