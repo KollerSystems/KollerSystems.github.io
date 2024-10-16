@@ -3,12 +3,15 @@ import init, { calc_next_prime } from "../wasm/pkg/wasm_lib.js";
 
 const DIGITS = 5;
 const QUOTE = 'Ahol a gatyám van, ott a gatyám van... Mert a gatyám rajtam van.';
-
+const MAXSTARS = 13;
 
 function sleep(time) {
   return new Promise(res => {
     setTimeout(res, time);
   })
+}
+function radToDeg(rad) {
+  return (rad * (180 / Math.PI));
 }
 
 // Generate a new array such that: [start; stop[ -- where every item is an integer
@@ -148,6 +151,86 @@ window.addEventListener('load', async () => {
     digitContainer.appendChild(containerDiv);
   }
 
+  // star glittering
+  const starContainer = document.getElementById('stars');
+  const createStar = () => {
+    let div = document.createElement('div');
+
+    const size = getRandNum(8, 27) + 'px';
+    div.style.width = size;
+    div.style.height = size;
+    div.style.left = (getRandNum(0, 100000) / 1000) + '%';
+    div.style.top = (getRandNum(0, 100000) / 1000) + '%';
+
+    starContainer.appendChild(div);
+    div.addEventListener('animationend', () => {
+      div.remove();
+
+      setTimeout(() => {
+        createStar();
+      }, getRandNum(100, 3000));
+    });
+  }
+
+  for (let i = 0; i < MAXSTARS; i++) {
+    setTimeout(() => {
+      createStar();
+    }, getRandNum(100, 6000));
+  }
+
+  createRecursiveTimeout(async () => {
+    let span = document.createElement('span');
+    let right = 0;
+    let m = getRandNum(25, 100) / 100;
+    let opacity = 0;
+    const shootingSpeed = getRandNum(2000, 3000) / 1000;
+
+    span.style.right = right + 'px';
+    span.style.top = (right * m) + 'px';
+    span.style.opacity = opacity;
+    span.style.transform = `rotate(${270 + radToDeg(Math.atan(1/m))}deg)`;
+
+    starContainer.appendChild(span);
+
+    const frame = () => {
+      right += shootingSpeed;
+      span.style.right = right + 'px';
+      span.style.top = (right * m) + 'px';
+
+      let w = starContainer.clientWidth;
+      let h = starContainer.clientHeight;
+
+      let doneD = Math.hypot(right, right * m);
+      let fullD;
+      if ((1/m) < (w / h)) fullD = h / Math.cos(Math.atan(1/m));
+      else fullD = w / Math.sin(Math.atan(1/m));
+
+      if (doneD / fullD < 0.25) {
+        opacity = (doneD / (fullD / 4));
+
+      } else if (doneD / fullD > 0.75) {
+        // let diff = fullD - doneD;
+        // let steps = diff / Math.hypot(shootingSpeed, shootingSpeed * m);
+        // opacity -= opacity / steps;
+
+        doneD -= 0.75 * fullD;
+        fullD /= 4;
+        opacity = 1 - doneD / fullD;
+        if (opacity < 0) {
+          span.remove();
+          return;
+        }
+      }
+      span.style.opacity = opacity;
+
+      window.requestAnimationFrame(frame);
+    };
+    window.requestAnimationFrame(frame);
+
+    await sleep(5000);
+  }, getRandNum.bind(null, 5_000, 15_000));
+
+  // counter
   let animationParams = [45, 45 * 3, 45 * 2, 45];
 
   let runs = getRandNum(10, 100);
@@ -186,9 +269,6 @@ window.addEventListener('wheel', e => {
 });
 
 /*
- * IDEA
- * box with overflows hidden (and colored gradient edges from bg color to transparent)
- * calling an updateCounter function pushes new DOM object(num) below visibility(or more if it's more to update)
- * it essentially creates a column of numbers to this
- * that column then gets moved (with css transform animations applied)
+ * IDEA: hullócsillagot beállítni, hogy valamelyik betűt találja el mindig, és olyankor az kivilágítana
+ * overflow még lehetséges a counterben
  * */
