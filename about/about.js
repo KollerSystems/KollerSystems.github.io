@@ -13,6 +13,22 @@ function sleep(time) {
 function radToDeg(rad) {
   return (rad * (180 / Math.PI));
 }
+function modifycolor(color, percent) {
+  let num = parseInt(color, 16);
+  let amt = Math.round(2.55 * percent);
+  let R = (num >> 16) + amt;
+  let B = (num >> 8 & 0x00FF) + amt;
+  let G = (num & 0x0000FF) + amt;
+
+  const squash = v => ( v < 255 ? (v < 1 ? 0 : v) : 255);
+
+  return (
+    0x1000000 +
+    squash(R) * 0x10000 +
+    squash(B) * 0x100 +
+    squash(G)
+  ).toString(16).slice(1);
+};
 
 // Generate a new array such that: [start; stop[ -- where every item is an integer
 function range(start, stop) {
@@ -268,7 +284,47 @@ window.addEventListener('wheel', e => {
   }
 });
 
+
+let active;
+let stickerContainer = document.getElementById('stickercontainer');
+let stickers = stickerContainer.getElementsByTagName('div');
+let n = 0;
+for (let div of stickers) {
+  div.style.zIndex = n++;
+  let bgcolor = div.style.background
+    .slice(4, -1)
+    .split(', ')
+    .map(v => parseInt(v, 10).toString(16))
+    .join('');
+
+  div.style.borderColor = '#' + modifycolor(bgcolor, -10);
+
+  div.addEventListener('mousedown', e => {
+    active = e;
+    active.container = e.currentTarget;
+
+    let zIndex = Number(active.container.style.zIndex);
+    for (let sticker of stickers) {
+      let otherzIndex = Number(sticker.style.zIndex);
+      if (otherzIndex > zIndex)
+        sticker.style.zIndex = otherzIndex - 1;
+    }
+
+    active.container.style.zIndex = stickers.length - 1;
+
+  });
+  div.addEventListener('mouseup', () => {
+    active = undefined;
+  });
+}
+
+stickerContainer.addEventListener('mousemove', e => {
+  if (active == undefined) return;
+  active.container.style.left = e.x - active.layerX - 26 + 'px'; // miért 26?
+  active.container.style.top = e.y - active.layerY + 'px';
+});
 /*
  * IDEA: hullócsillagot beállítni, hogy valamelyik betűt találja el mindig, és olyankor az kivilágítana
  * overflow még lehetséges a counterben
+ * bufferben z-index => legutoljára mozgatott kártya elől legyen
  * */

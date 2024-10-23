@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&family=Updock&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 .gradientCircle:nth-of-type(1) {
   background: radial-gradient(circle at 80% 10%, #1a1a1a 0%, var(--background) 40%);
@@ -10,6 +11,9 @@
 }
 .gradientCircle:nth-of-type(3) {
   background: radial-gradient(circle at 100% 90%, #363636 0%, var(--background) 40%);
+}
+#textpanel {
+  z-index: 100;
 }
 
 body, html {
@@ -252,3 +256,86 @@ body, html {
   background: linear-gradient(90deg, #fff, transparent);
 }
 /* 315deg marad; 70% opacity 1; 100% translateX & opacity 0 */
+
+
+#stickercontainer {
+  background: rgb(255,254,244);
+  background: linear-gradient(90deg, rgba(255,254,244,1) 0%, rgba(226,225,219,1) 100%);
+  background-image: radial-gradient(black 1.5px, transparent 0);
+  background-size: 30px 30px;
+  background-position: -19px -19px;
+}
+#stickercontainer > div {
+  position: absolute;
+  width: 300px;
+  font-family: "Urbanist";
+  font-size: 1.3em;
+  padding: 20px;
+  border-radius: 4px;
+  transition: box-shadow 0.025s ease, transform 0.025s ease;
+  cursor: grab;
+  border-style: solid;
+  border-width: 1px;
+}
+#stickercontainer > div:active {
+  box-shadow: 5px 5px 12px rgba(0,0,0, 0.4);
+  transform: translate(-5px, -5px);
+  transition: box-shadow 0.025s ease, transform 0.025s ease;
+  cursor: grabbing;
+}
+
+#stickercontainer > div h1 {
+  font-size: 1em;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+#stickercontainer > div > h1::before {
+  content: "#";
+  margin-right: 7px;
+  font-style: italic;
+  color: rgba(0,0,0,0.5);
+  font-weight: 700;
+}
+
+#stickercontainer > div ul li {
+  list-style-type: none;
+}
+#stickercontainer > div ul li::before {
+  content: "+";
+  margin-right: 7px;
+  font-style: italic;
+  color: rgba(0,0,0,0.5);
+  font-weight: 700;
+}
+
+#stickercontainer > div b {
+  font-weight: 700;
+}
+#stickercontainer > div b::before, #stickercontainer > div b::after {
+  content: "**";
+  color: rgba(0,0,0,0.5);
+  font-weight: 700;
+}
+
+#stickercontainer > div i {
+  font-style: italic;
+}
+#stickercontainer > div i::before, #stickercontainer > div i::after {
+  content: "_";
+  font-weight: 700;
+  color: rgba(0,0,0,0.5);
+}
+
+#stickercontainer > div s {
+  text-wrap: nowrap;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(0,0,0,0.5);
+}
+#stickercontainer > div s::before, #stickercontainer > div s::after {
+  text-decoration: none;
+  content: "~";
+  font-weight: 700;
+  color: rgba(0,0,0,0.5);
+  display: inline-block;
+}
