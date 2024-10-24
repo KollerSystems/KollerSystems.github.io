@@ -288,6 +288,15 @@ window.addEventListener('wheel', e => {
 let active;
 let stickerContainer = document.getElementById('stickercontainer');
 let stickers = stickerContainer.getElementsByTagName('div');
+
+let widthDiff;
+let heightDiff;
+window.addEventListener('resize', () => {
+  widthDiff = window.innerWidth - stickerContainer.clientWidth;
+  heightDiff = window.innerHeight - stickerContainer.clientHeight;
+});
+window.dispatchEvent(new Event('resize'));
+
 let n = 0;
 for (let div of stickers) {
   div.style.zIndex = n++;
@@ -320,11 +329,11 @@ for (let div of stickers) {
 
 stickerContainer.addEventListener('mousemove', e => {
   if (active == undefined) return;
-  active.container.style.left = e.x - active.layerX - 26 + 'px'; // miért 26?
-  active.container.style.top = e.y - active.layerY + 'px';
+
+  active.container.style.left = e.x - widthDiff - active.layerX + 'px';
+  active.container.style.top = e.y - heightDiff - active.layerY + 'px';
 });
 /*
  * IDEA: hullócsillagot beállítni, hogy valamelyik betűt találja el mindig, és olyankor az kivilágítana
  * overflow még lehetséges a counterben
- * bufferben z-index => legutoljára mozgatott kártya elől legyen
- * */
+ */
