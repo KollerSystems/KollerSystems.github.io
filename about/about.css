@@ -284,6 +284,10 @@ body, html {
   cursor: grabbing;
 }
 
+#stickercontainer > div p {
+  margin: 20px 0;
+}
+
 #stickercontainer > div h1 {
   font-size: 1em;
   margin: 0;
@@ -298,8 +302,12 @@ body, html {
   font-weight: 700;
 }
 
+#stickercontainer > div ul {
+  padding-left: 20px;
+}
 #stickercontainer > div ul li {
   list-style-type: none;
+  text-indent: -15px;
 }
 #stickercontainer > div ul li::before {
   content: "+";
@@ -338,4 +346,29 @@ body, html {
   font-weight: 700;
   color: rgba(0,0,0,0.5);
   display: inline-block;
+}
+
+#stickercontainer > div q {
+  display: block;
+  border-left: 3px solid rgba(0,0,0,0.5);
+  margin: 20px 0;
+  padding-left: 10px;
+  font-style: italic;
+  margin-left: 10px;
+}
+#stickercontainer > div q::before {
+  content: "> ";
+  font-weight: 700;
+  font-style: normal;
+  overflow: visible;
+  color: rgba(0,0,0,0.5);
+}
+#stickercontainer > div q::after {
+  content: "";
+}
+
+#stickercontainer > div hr {
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 10px;
+  width: 80%;
 }

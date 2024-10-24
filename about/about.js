@@ -289,6 +289,11 @@ let active;
 let stickerContainer = document.getElementById('stickercontainer');
 let stickers = stickerContainer.getElementsByTagName('div');
 
+for (let sticker of stickers) {
+  sticker.style.left = getRandNum(20, 80) + '%';
+  sticker.style.top = getRandNum(20, 80) + '%';
+}
+
 let widthDiff;
 let heightDiff;
 window.addEventListener('resize', () => {
