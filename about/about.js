@@ -316,6 +316,7 @@ for (let div of stickers) {
   div.addEventListener('mousedown', e => {
     active = e;
     active.container = e.currentTarget;
+    stickerContainer.style.cursor = 'grabbing';
 
     let zIndex = Number(active.container.style.zIndex);
     for (let sticker of stickers) {
@@ -327,10 +328,11 @@ for (let div of stickers) {
     active.container.style.zIndex = stickers.length - 1;
 
   });
-  div.addEventListener('mouseup', () => {
-    active = undefined;
-  });
 }
+stickerContainer.addEventListener('mouseup', () => {
+  active = undefined;
+    stickerContainer.style.cursor = '';
+});
 
 stickerContainer.addEventListener('mousemove', e => {
   if (active == undefined) return;
